@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn1">load</button>
+    <button id="btn2">post message</button>
+
+    <script>
+      let popupObj = null;
+      function init() {
+        document.getElementById("btn1").addEventListener("click", popup);
+
+        document.getElementById("btn2").addEventListener("click", () => {
+          const rtn = message();
+          console.log(rtn);
+        });
+        //popup();
+      }
+
+      function message() {
+        let rtnData = null;
+        window.addEventListener("message", (e) => {
+          console.log(e.data);
+          rtnData = e.data;
+        });
+        popupObj.postMessage("hello from home", "*");
+        return rtnData;
+      }
+
+      function popup() {
+        //const iframe = document.getElementById("iframe1");
+        //iframe.src = "page.html";
+        popupObj = window.open("page.html", "popup", "width=400,height=400");
+      }
+
+      init();
+    </script>
+  </body>
+</html>
